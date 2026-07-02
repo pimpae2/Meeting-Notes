@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "PROMPTNOTE - พร้อมโน๊ต",
+  "short_name": "PROMPTNOTE",
+  "version": "0.1.0",
+  "description": "พร้อมโน๊ต Side Panel สำหรับจดโน้ตประชุมและส่งเข้า Google Sheets",
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_title": "PROMPTNOTE พร้อมโน๊ต",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "identity",
+    "sidePanel",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://sheets.googleapis.com/*"
+  ],
+  "oauth2": {
+    "client_id": "202508374915-uf77ngi20sdd5mrtklgpq5u6f025rdhu.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets"
+    ]
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROMPTNOTE พร้อมโน๊ต</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <img class="brand-icon" src="icons/icon48.png" alt="" />
+          <div>
+            <h1 class="brand-title">
+              <span>PROMPTNOTE</span>
+              <span class="brand-th">พร้อมโน๊ต</span>
+            </h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="refreshLinkButton" class="icon-button" type="button" title="ดึงลิงก์แท็บนี้">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12a9 9 0 0 1-15.1 6.6" />
+              <path d="M3 12A9 9 0 0 1 18.1 5.4" />
+              <path d="M18 2v4h-4" />
+              <path d="M6 22v-4h4" />
+            </svg>
+          </button>
+          <button id="clearButton" class="icon-button" type="button" title="ล้างฟอร์ม">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18" />
+              <path d="M8 6V4h8v2" />
+              <path d="M19 6l-1 14H6L5 6" />
+              <path d="M10 11v5" />
+              <path d="M14 11v5" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="composer" aria-label="Meeting note form">
+        <div class="mode-toggle" role="tablist" aria-label="โหมดบันทึก">
+          <button id="localModeButton" class="mode-button is-active" type="button" role="tab" aria-selected="true">
+            Note
+          </button>
+          <button id="sheetModeButton" class="mode-button" type="button" role="tab" aria-selected="false">
+            Sheet
+          </button>
+        </div>
+
+        <form id="noteForm" autocomplete="off">
+          <div class="sheet-field sheet-url-field">
+            <label class="field sheet-url-label" for="sheetUrl">
+              <span>Google Sheet URL</span>
+              <input id="sheetUrl" type="url" placeholder="https://docs.google.com/spreadsheets/d/..." />
+            </label>
+            <button
+              id="toggleColumnsButton"
+              class="icon-button column-toggle"
+              type="button"
+              title="ตั้งค่าคอลัมน์ Sheet"
+              aria-label="ตั้งค่าคอลัมน์ Sheet"
+              aria-controls="columnSettings"
+              aria-expanded="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 21v-7" />
+                <path d="M4 10V3" />
+                <path d="M12 21v-9" />
+                <path d="M12 8V3" />
+                <path d="M20 21v-5" />
+                <path d="M20 12V3" />
+                <path d="M2 14h4" />
+                <path d="M10 8h4" />
+                <path d="M18 16h4" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="columnSettings" class="sheet-field column-settings" aria-label="ตั้งค่าคอลัมน์ Sheet" hidden>
+            <div class="column-settings-header">
+              <span>คอลัมน์ Sheet</span>
+              <button id="resetColumnsButton" class="text-button column-reset" type="button">รีเซ็ต</button>
+            </div>
+            <p class="column-hint">A ใช้เลขลำดับ, E ใช้ระบบจาก URL</p>
+            <div class="column-grid">
+              <label class="column-field" for="titleColumn">
+                <span>หัวข้อ</span>
+                <input id="titleColumn" type="text" maxlength="2" autocomplete="off" />
+              </label>
+              <label class="column-field" for="detailsColumn">
+                <span>รายละเอียด</span>
+                <input id="detailsColumn" type="text" maxlength="2" autocomplete="off" />
+              </label>
+              <label class="column-field" for="linkColumn">
+                <span>ลิงก์</span>
+                <input id="linkColumn" type="text" maxlength="2" autocomplete="off" />
+              </label>
+            </div>
+          </div>
+
+          <label class="field" for="titleInput">
+            <span>หัวข้อ</span>
+            <input id="titleInput" type="text" maxlength="120" placeholder="เช่น แก้ข้อความหน้าเสนอราคา" required />
+          </label>
+
+          <label class="field" for="detailsInput">
+            <span>รายละเอียด</span>
+            <textarea id="detailsInput" rows="8" placeholder="จดประเด็นที่ต้องแก้ รายละเอียด หรือข้อสรุปจากที่ประชุม" required></textarea>
+          </label>
+
+          <label class="field" for="linkInput">
+            <span>ลิงก์</span>
+            <input id="linkInput" type="url" placeholder="ลิงก์หน้าเว็บหรือเอกสารที่เกี่ยวข้อง" />
+          </label>
+
+          <button id="saveButton" class="primary-button" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" />
+              <path d="M17 21v-8H7v8" />
+              <path d="M7 3v5h8" />
+            </svg>
+            <span id="saveButtonLabel">บันทึกโน้ต</span>
+          </button>
+        </form>
+
+        <p id="statusMessage" class="status" aria-live="polite"></p>
+      </section>
+
+      <section class="notes-section" aria-label="โน้ตล่าสุด">
+        <div class="section-heading">
+          <h2>โน้ตล่าสุด</h2>
+          <button id="exportButton" class="text-button" type="button">Export CSV</button>
+        </div>
+        <div id="notesList" class="notes-list"></div>
+        <p id="emptyState" class="empty-state">ยังไม่มีโน้ต</p>
+      </section>
+    </main>
+
+    <template id="noteTemplate">
+      <article class="note-item">
+        <div class="note-meta">
+          <span class="note-destination"></span>
+          <time class="note-time"></time>
+        </div>
+        <h3 class="note-title"></h3>
+        <p class="note-details"></p>
+        <a class="note-link" target="_blank" rel="noreferrer"></a>
+        <button class="delete-note icon-button" type="button" title="ลบโน้ต">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </article>
+    </template>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
